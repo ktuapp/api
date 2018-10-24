@@ -1,4 +1,7 @@
-# KTU APP
+# KTU API
+
+This is an api to get APJ Abdul Kalam Technological University (KTU) students grades,basic details etc.
+
 ## How to start
 ### Install node modules
 `npm install`
