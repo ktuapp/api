@@ -1,0 +1,13 @@
+version: '3.1'
+services:
+  app:
+    container_name: ktu-app
+    restart: always
+    build: .
+    env_file:
+      - .env
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/usr/src/app
+    command: ["npm", "run", "dev"]
