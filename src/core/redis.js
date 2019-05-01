@@ -1,6 +1,5 @@
 import redis from 'redis'
 import { promisify } from 'util'
-require('dotenv').config()
 
 const client = redis.createClient({
   port: process.env.REDIS_PORT,

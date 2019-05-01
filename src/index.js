@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 import app from './core/app'
 import client, { getAsync } from './core/redis'
-require('dotenv').config()
 
 const PORT = process.env.PORT || 3000
 const startApp = () => {
