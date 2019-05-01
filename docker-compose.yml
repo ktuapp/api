@@ -1,5 +1,10 @@
 version: '3.1'
 services:
+  redis:
+    image: redis:5.0
+    container_name: ktu-redis
+    ports:
+      - 6379:6379
   app:
     container_name: ktu-app
     restart: always
@@ -10,4 +15,6 @@ services:
       - "3000:3000"
     volumes:
       - .:/usr/src/app
+    depends_on:
+      - redis
     command: ["npm", "run", "dev"]
