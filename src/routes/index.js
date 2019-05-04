@@ -1,5 +1,6 @@
 import { Router } from 'express'
-import { getStudentDetails, getNotifications } from '../controllers/studentDetailsController'
+import getStudentDetails from '../controllers/studentDetails'
+import getNotifications from '../controllers/notifications'
 import { validateRequest } from '../middleware'
 
 const router = Router()

@@ -8,7 +8,15 @@ const startApp = () => {
     app.set('port', PORT)
     app.listen(app.get('port'), () => console.log(`Server Running http://localhost:${PORT}`))    
     // const expiry = new Date().setHours(48)
-    // client.set('my string', 'this is a string', 'EX', expiry)
+    // client.setex('key1', 10, 'this is a string' )
+    // client.setex('key2', 20, 'this is a string' )
+    // client.expireat('hash key', 10)
+    // client.hset('hash key', 'hashtest 1', 'some value')
+    // setTimeout(() => client.hset('hash key', 'hashtest 2', 'some value 2'), 3000)
+
+
+    // client.ttl('key1', (err, data) => { console.log(`Time key1 ${data}`) })
+    // client.ttl('key2', (err, data) => { console.log(`Time key2 ${data}`) })
 
     // getAsync('my string').then((data) => {
     //   console.log(data)
