@@ -15,7 +15,7 @@ const getStudentDetails = async (req, res) => {
   try {
     const data_redis = await getUserRedis(user)
     if(data_redis !== null) {
-      console.log("Showing data from redis")
+      console.log('Showing data from redis')
       res.json(data_redis)
       return
     }
@@ -29,9 +29,9 @@ const getStudentDetails = async (req, res) => {
 }
 
 const getCSRFToken = () => {
-  var j = request.jar()
+  let j = request.jar()
   return new Promise((resolve, reject) => {
-    var options = {
+    const options = {
       uri: 'https://app.ktu.edu.in/login.jsp',
       jar: j,
       transform: function (body) {
