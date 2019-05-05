@@ -17,5 +17,6 @@ client.on('error', function (err) {
 })
 
 export const getAsync = promisify(client.get).bind(client)
+export const lrangeAsync = promisify(client.lrange).bind(client)
 
 export default client

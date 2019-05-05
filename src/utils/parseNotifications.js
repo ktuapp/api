@@ -1,3 +1,5 @@
+import slugify from './slugify'
+
 export default ($) => {
   let notificationArray = []
   let j = 0
@@ -23,6 +25,7 @@ export default ($) => {
             if (i === 0) {
               const dataElem = $(elem).children().first()
               notification.heading = $(dataElem).children().first().text()
+              notification.key = slugify(notification.heading)
               let value = $(dataElem).clone().children().remove().end().text()
               value = value.replace(/\t/g, '')
               value = value.replace(/\n/g, '')

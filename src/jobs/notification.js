@@ -1,8 +1,9 @@
 import rp from 'request-promise'
 import cheerio from 'cheerio'
 import parseNotifications from '../utils/parseNotifications.js'
+import { saveNotifications } from '../utils/redis'
 
-const getNotifications = async () => {
+const fetchNotifications = async () => {
   const options = {
     uri: 'https://ktu.edu.in/eu/core/announcements.htm',
     transform: function (body) {
@@ -12,9 +13,10 @@ const getNotifications = async () => {
   try {
     const response = await rp(options)
     const notifications = parseNotifications(response)
+    saveNotifications(notifications)
   } catch (e) {
     console.error(e)
   }
 }
 
-export default getNotifications
+export default fetchNotifications
