@@ -1,1 +1,9 @@
-console.log("Working fine")
+import cron from 'node-cron'
+import notification from './notification'
+
+const startJobs = () => {
+  cron.schedule('*/20 * * * * *', notification)
+  
+}
+
+export default startJobs
