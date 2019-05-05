@@ -23,7 +23,7 @@ export const saveNotifications = async (notifications) => {
   try {
     const existingNotifications = await getNotifications()
     const newNotifications = notifications
-      .filter((n) => (existingNotifications.filter(en => JSON.parse(en).key === n.key).length === 0))
+      .filter((n) => (existingNotifications.filter(en => en.key === n.key).length === 0))
       .map((n) => (JSON.stringify(n)))
     if(newNotifications.length > 0) {
       client.rpush('notifications', newNotifications)
@@ -33,7 +33,7 @@ export const saveNotifications = async (notifications) => {
   }
 }
 
-const getNotifications = async () => {
+export const getNotifications = async () => {
   const data = await lrangeAsync('notifications', 0, -1)
-  return data
+  return data.map((n)=>JSON.parse(n))
 }

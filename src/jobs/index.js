@@ -2,7 +2,7 @@ import cron from 'node-cron'
 import notification from './notification'
 
 const startJobs = () => {
-  cron.schedule('*/10 * * * * *', notification)
+  cron.schedule('* */3 * * *', notification)
 }
 
 export default startJobs
