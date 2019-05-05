@@ -3,49 +3,29 @@ import request from 'request'
 import cheerio from 'cheerio'
 import rp from 'request-promise'
 import parseData from '../utils/parseData'
-
-const getDetails = (res, cookieJar) => {
-  return new Promise((resolve) => {
-    if (res.statusCode === 200) {
-      resolve(parseData(cheerio.load(res.body), cookieJar))
-    }
-  })
-}
+import { setUserRedis, getUserRedis } from '../utils/redis'
 
 const getStudentDetails = async (req, res) => {
-  let csrf = await getCSRFToken()
-  let options = {
-    method: 'POST',
-    uri: 'https://app.ktu.edu.in/login.jsp',
-    simple: false,
-    jar: csrf.jar,
-    form: {
-      CSRF_TOKEN: csrf.token,
-      username: req.body.userid,
-      password: req.body.password
-    },
-    // headers: {
-    //   'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-    //   'cache-control': 'no-cache',
-    //   'content-type': 'application/x-www-form-urlencoded',
-    //   'connection': 'keep-alive',
-    //   'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:64.0) Gecko/20100101 Firefox/64.0' },
-    headers: {
-      'user-Agent':
-				'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:64.0) Gecko/20100101 Firefox/64.0',
-      'content-Type': 'application/x-www-form-urlencoded'
-    },
-    followAllRedirects: true,
-    resolveWithFullResponse: true
+
+  const user = {
+    id: req.body.userid,
+    password: req.body.password
   }
+
   try {
-    let response = await rp(options)
-    let data = await getDetails(response, csrf.jar)
+    const data_redis = await getUserRedis(user)
+    if(data_redis !== null) {
+      console.log("Showing data from redis")
+      res.json(data_redis)
+      return
+    }
+    const data = await getDetailsFromWebsite(user)
     res.json(data)
   } catch (e) {
     console.log(e)
     res.status(403).send({ status: 'error' })
   }
+  
 }
 
 const getCSRFToken = () => {
@@ -67,6 +47,32 @@ const getCSRFToken = () => {
         reject(err)
       })
   })
+}
+
+const getDetailsFromWebsite = async (user) => {
+  let csrf = await getCSRFToken()
+  let options = {
+    method: 'POST',
+    uri: 'https://app.ktu.edu.in/login.jsp',
+    simple: false,
+    jar: csrf.jar,
+    form: {
+      CSRF_TOKEN: csrf.token,
+      username: user.id,
+      password: user.password
+    },
+    headers: {
+      'user-Agent':
+				'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:64.0) Gecko/20100101 Firefox/64.0',
+      'content-Type': 'application/x-www-form-urlencoded'
+    },
+    followAllRedirects: true,
+    resolveWithFullResponse: true
+  }
+  let response = await rp(options)
+  let data = parseData(cheerio.load(response.body), csrf.jar)
+  setUserRedis(user, data)
+  return data
 }
 
 export default getStudentDetails

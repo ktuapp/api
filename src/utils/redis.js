@@ -2,18 +2,18 @@ import client, { getAsync } from '../core/redis'
 import crypto from 'crypto'
 const expiry = new Date().setHours(24)
 
-//TODO: Generate an md5 hash with userid and password
-export const generateKey = (user) => {
-  return crypto.createHash('md5').update(`${user.id}${user.password}`).digest('hex')
+const generateUserKey = (user) => {
+  return `user/${crypto.createHash('md5').update(`${user.id}${user.password}`).digest('hex')}`
 }
 
 export const setUserRedis = (user, data) => {
-  client.setex(generateKey(user), expiry, data)
+  client.set(generateUserKey(user), JSON.stringify(data), 'EX', expiry)
 }
 
 export const getUserRedis = async (user) => {
   try {
-    return await getAsync(generateKey(user))
+    const data = await getAsync(generateUserKey(user))
+    return JSON.parse(data)
   } catch (e) {
     return null
   } 
