@@ -1,5 +1,6 @@
 import client, { getAsync, lrangeAsync } from '../core/redis'
 import crypto from 'crypto'
+import { sendNotification } from '../core/firebase'
 const expiry = new Date().setHours(24)
 
 const generateUserKey = (user) => {
@@ -27,6 +28,7 @@ export const saveNotifications = async (notifications) => {
       .map((n) => (JSON.stringify(n)))
     if(newNotifications.length > 0) {
       client.rpush('notifications', newNotifications)
+      newNotifications.map((n)=>sendNotification(n, 'ktu_notification'))
     }
   } catch (e) {
     console.log(e)
