@@ -1,4 +1,6 @@
 /* eslint-disable no-console */
+require('dotenv').config()
+
 import app from './core/app'
 import startJobs from './jobs'
 

@@ -1,4 +1,5 @@
 import * as admin from 'firebase-admin'
+require('dotenv').config()
 
 const serviceAccount = require('../../config/firebase.json')
 
@@ -7,7 +8,7 @@ admin.initializeApp({
   databaseURL: process.env.FIREBASE_DB_URL
 })
 
-export const sendNotification = async (topic, data) => {
+export const sendNotification = async (data, topic) => {
   const message = {
     data,
     topic

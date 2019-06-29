@@ -2,9 +2,11 @@ import rp from 'request-promise'
 import cheerio from 'cheerio'
 import parseNotifications from '../utils/parseNotifications.js'
 import { saveNotifications } from '../utils/redis'
+import { sendMessage } from '../core/slack.js'
 
 const fetchNotifications = async () => {
-  console.log("Fetching Notifications");
+  console.log("Fetching Notifications")
+  sendMessage('Fetching Notifications')
   
   const options = {
     uri: 'https://ktu.edu.in/eu/core/announcements.htm',
