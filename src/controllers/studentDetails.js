@@ -69,10 +69,25 @@ const getDetailsFromWebsite = async (user) => {
     followAllRedirects: true,
     resolveWithFullResponse: true
   }
-  let response = await rp(options)
-  let data = parseData(cheerio.load(response.body), csrf.jar)
+  await rp(options)
+  let response = await getStudentResponse(csrf.jar)
+  let data = parseData(cheerio.load(response), csrf.jar)
   setUserRedis(user, data)
   return data
+}
+
+export const getStudentResponse = (jar) => {
+  return new Promise((resolve, reject) => {
+    var options = {
+      uri: 'https://app.ktu.edu.in/eu/stu/studentDetailsView.htm',
+      jar: jar,
+    }
+    rp(options).then((res) => {
+      resolve(res)
+    }).catch((err)=>{
+      reject(err)
+    })
+  })
 }
 
 export default getStudentDetails
