@@ -10,22 +10,24 @@ const parseData = ($, cookieJar) => {
   const data = {}
   data.username = username
   data.userid = userid
-  // let proimgurl = 'http://app.ktu.edu.in' + proimg
-  // getImg(proimgurl, cookieJar, userid)
-  // data.proimg = process.env.IMAGE_URL + userid + '.jpg'
+  let proimgurl = 'http://app.ktu.edu.in' + proimg
+  getImg(proimgurl, cookieJar, userid)
+  data.proimg = process.env.IMAGE_URL + userid + '.jpg'
   $('.list-group-item').each(function () {
     $(this)
       .children()
       .each(function (i, elem) {
         try {
-          let value = elem.next.data
-          value = value.replace(/\t/g, '')
-          value = value.replace(/\n/g, '')
-          value = value.replace(/ {2}/g, '')
-          let title = $(this).text()
-          title = title.replace(/\s+/g, '')
-          data[title] = value
-        } catch (e) { 
+          if (elem.next != null) {
+            let value = elem.next.data
+            value = value.replace(/\t/g, '')
+            value = value.replace(/\n/g, '')
+            value = value.replace(/ {2}/g, '')
+            let title = $(this).text()
+            title = title.replace(/\s+/g, '')
+            data[title] = value
+          }
+        } catch (e) {
           console.error(e)
         }
       })
@@ -54,11 +56,8 @@ const parseData = ($, cookieJar) => {
             dataRow.type = $(elem).text()
             break
           case 4:
-            dataRow.completed = $(elem).text()
+            dataRow.completed = $(elem).text().replace(/[\t\n\s]/g, '')
             break
-            // case 5:
-            // 	dataRow.grade = $(elem).text()
-            // 	break
           case 6:
             dataRow.grade = $(elem).text()
             break
@@ -91,7 +90,7 @@ const parseData = ($, cookieJar) => {
 
 const getImg = (url, cookieJar, userid) => {
   if (userid) {
-    const path = Path.resolve('/var/www', 'proimg', userid + '.jpg')
+    const path = Path.resolve(process.env.IMAGE_PATH, 'proimg', userid + '.jpg')
     request({
       uri: url,
       jar: cookieJar,
