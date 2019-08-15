@@ -3,7 +3,7 @@ import crypto from 'crypto'
 import { sendNotification } from '../core/firebase'
 import { sendMessage } from '../core/slack'
 
-const expiry = new Date().setHours(24)
+const expiry = 60*60*24
 
 const generateUserKey = (user) => {
   return `user/${crypto.createHash('md5').update(`${user.id}${user.password}`).digest('hex')}`
