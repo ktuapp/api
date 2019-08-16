@@ -8,9 +8,10 @@ admin.initializeApp({
   databaseURL: process.env.FIREBASE_DB_URL
 })
 
-export const sendNotification = async (data, topic) => {
+export const sendNotification = async (data, notification, topic) => {
   const message = {
     data,
+    notification,
     topic
   }
   try {
