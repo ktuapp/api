@@ -1,12 +1,19 @@
 /* eslint-disable no-console */
 import { Notes } from '../core/mongo'
+import { getS3file } from '../core/aws'
 import { SEMESTERS, BRANCHES, SUBJECTS } from '../utils/constants'
 
 export const showNotes = async (req, res) => {
   try {
     const { subject, module } = req.body
     const notes = await Notes.find({ subject: subject, module: module })
-    res.json({ notes: notes })
+    const note_data = await Promise.all(notes.map(async (note) => {
+      const url = await getS3file('cse/s2/coa/1/note1.pdf')
+      return { note_details: note, url: url }
+    }))
+    res.json({
+      notes: note_data
+    })
   } catch (err) {
     console.error(err)
   }
