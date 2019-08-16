@@ -31,7 +31,7 @@ export const saveNotifications = async (notifications) => {
     if(newNotifications.length > 0) {
       client.rpush('notifications', newNotifications)
       sendMessage(JSON.stringify(newNotifications))
-      // newNotifications.map((n)=>sendNotification(n, 'ktu_notification'))
+      newNotifications.map((n)=>sendNotification(n, { 'title' : n.heading, 'body': n.data.substring(0,100).concat('...') }, 'ktu_notification'))
     }
   } catch (e) {
     console.log(e)
