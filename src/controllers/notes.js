@@ -1,10 +1,28 @@
+/* eslint-disable no-console */
 import { Notes } from '../core/mongo'
 import { SEMESTERS, BRANCHES, SUBJECTS } from '../utils/constants'
 
 export const showNotes = async (req, res) => {
   try {
-    const notes = await Notes.find({ subject: 'coa', module: 1 })
+    const { subject, module } = req.body
+    const notes = await Notes.find({ subject: subject, module: module })
     res.json({ notes: notes })
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+export const addNote = async (req, res) => {
+  try {
+    const { subject, module, link } = req.body
+    const note_data = {
+      subject,
+      module,
+      link,
+    }
+    const notes = new Notes(note_data)
+    await notes.save()
+    res.json({ status: 'Saved successfully' })
   } catch (err) {
     console.error(err)
   }
