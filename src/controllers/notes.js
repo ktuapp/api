@@ -1,20 +1,37 @@
 import { Notes } from '../core/mongo'
+import { SEMESTERS, BRANCHES, SUBJECTS } from '../utils/constants'
 
-const showNotes = async (req, res) => {
+export const showNotes = async (req, res) => {
   try {
-    const note_data = {
-      semester: 'I',
-      course: 'CS',
-      module: 'Module 1',
-      topic: 'Topic',
-      link: 'http://google.com'
-    }
-    const notes = new Notes(note_data)
-    await notes.save()
-    res.json({ notes: note_data })
+    const notes = await Notes.find({ subject: 'coa', module: 1 })
+    res.json({ notes: notes })
   } catch (err) {
     console.error(err)
   }
 }
 
-export default showNotes
+export const showSemesters = async (req, res) => {
+  try {
+    res.json({ semesters: SEMESTERS })
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+export const showBranches = async (req, res) => {
+  try {
+    res.json({ branches: BRANCHES })
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+export const showSubjects = async (req, res) => {
+  try {
+    const { semester, branch } = req.body
+    const subjects = SUBJECTS.filter((s) => (s.semester === semester && s.branch === branch))
+    res.json({ subjects: subjects })
+  } catch (err) {
+    console.error(err)
+  }
+}

@@ -1,21 +1,9 @@
 import { Schema } from 'mongoose'
 
 const noteSchema = new Schema({
-  semester: {
-    type: 'String'
-  },
-  course: {
-    type: 'String'
-  },
-  module: {
-    type: 'String'
-  },
-  topic: {
-    type: 'String'
-  },
-  link: {
-    type: 'string'
-  }
+  subject: 'String',
+  module: 'Number',
+  link: 'String'
 })
 
 export default noteSchema
