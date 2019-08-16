@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { getNotifications } from '../utils/redis'
 
 const showNotifications = async (req, res) => {

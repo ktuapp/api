@@ -5,7 +5,6 @@ import { saveNotifications } from '../utils/redis'
 import { sendMessage } from '../core/slack.js'
 
 const fetchNotifications = async () => {
-  console.log("Fetching Notifications")
   sendMessage('Fetching Notifications')
   
   const options = {
@@ -17,7 +16,6 @@ const fetchNotifications = async () => {
   try {
     const response = await rp(options)
     const notifications = parseNotifications(response)
-    console.log("Fetching Notifications", notifications)
     saveNotifications(notifications)
   } catch (e) {
     console.error(e)

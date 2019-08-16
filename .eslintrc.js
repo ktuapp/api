@@ -9,6 +9,7 @@ module.exports = {
         "sourceType": "module"
     },
     "rules": {
+        "no-console": "off",
         "indent": ["error", 4],
         "indent": ["warn", 2],
         "linebreak-style": [
