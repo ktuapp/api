@@ -3,7 +3,7 @@ import crypto from 'crypto'
 import { sendNotification } from '../core/firebase'
 import { sendMessage } from '../core/slack'
 
-const expiry = 60*60*24
+const expiry = 60 * 60 * 24
 
 const generateUserKey = (user) => {
   return `user/${crypto.createHash('md5').update(`${user.id}${user.password}`).digest('hex')}`
@@ -28,10 +28,20 @@ export const saveNotifications = async (notifications) => {
     const newNotifications = notifications
       .filter((n) => (existingNotifications.filter(en => en.key === n.key).length === 0))
       .map((n) => (JSON.stringify(n)))
-    if(newNotifications.length > 0) {
+    if (newNotifications.length > 0) {
       client.rpush('notifications', newNotifications)
       sendMessage(JSON.stringify(newNotifications))
-      newNotifications.map((n)=>sendNotification({...n, click_action: 'FLUTTER_NOTIFICATION_CLICK'}, { 'title' : n.heading, 'body': n.data.substring(0,100).concat('...') }, 'ktu_notification'))
+      newNotifications.foreach((n) => {
+        sendMessage(JSON.stringify(n))
+        sendNotification({
+          ...n,
+          click_action: 'FLUTTER_NOTIFICATION_CLICK'
+        }, {
+            'title': n.heading, 'body': n.data
+              .substring(0, 100)
+              .concat('...')
+          }, 'ktu_notification')
+      })
     }
   } catch (e) {
     console.log(e)
@@ -40,5 +50,5 @@ export const saveNotifications = async (notifications) => {
 
 export const getNotifications = async () => {
   const data = await lrangeAsync('notifications', 0, -1)
-  return data.map((n)=>JSON.parse(n))
+  return data.map((n) => JSON.parse(n))
 }

@@ -14,9 +14,10 @@ export const sendNotification = async (data, notification, topic) => {
     notification,
     topic
   }
+  console.log('Sending notification', message)
   try {
     await admin.messaging().send(message)
   } catch (e) {
-    console.error('Some Error Occured')
+    console.error('Error sending notification', e)
   }
 }
