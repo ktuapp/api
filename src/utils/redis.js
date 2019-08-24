@@ -31,7 +31,7 @@ export const saveNotifications = async (notifications) => {
     if (newNotifications.length > 0) {
       client.rpush('notifications', newNotifications)
       sendMessage(JSON.stringify(newNotifications))
-      newNotifications.foreach((n) => {
+      newNotifications.forEach((n) => {
         sendMessage(JSON.stringify(n))
         sendNotification({
           ...n,
