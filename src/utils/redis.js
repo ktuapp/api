@@ -33,13 +33,12 @@ export const saveNotifications = async (notifications) => {
       sendMessage(JSON.stringify(newNotifications))
       newNotifications.foreach((n) => {
         sendMessage(JSON.stringify(n))
+        console.log('Each notificaiton', n)
         sendNotification({
           ...n,
           click_action: 'FLUTTER_NOTIFICATION_CLICK'
         }, {
             'title': n.heading, 'body': n.data
-              .substring(0, 100)
-              .concat('...')
           }, 'ktu_notification')
       })
     }
