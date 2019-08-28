@@ -43,30 +43,30 @@ const parseData = ($, cookieJar) => {
         .children()
         .each(function (i, elem) {
           switch (j) {
-          case 0:
-            dataRow.slot = $(elem).text()
-            break
-          case 1:
-            dataRow.course = $(elem).text()
-            break
-          case 2:
-            dataRow.credit = $(elem).text()
-            break
-          case 3:
-            dataRow.type = $(elem).text()
-            break
-          case 4:
-            dataRow.completed = $(elem).text().replace(/[\t\n\s]/g, '')
-            break
-          case 6:
-            dataRow.grade = $(elem).text()
-            break
-          case 7:
-            dataRow.earned = $(elem).text()
-            break
-          case 8:
-            sgpa = $(elem).text()
-            break
+            case 0:
+              dataRow.slot = $(elem).text()
+              break
+            case 1:
+              dataRow.course = $(elem).text()
+              break
+            case 2:
+              dataRow.credit = $(elem).text()
+              break
+            case 3:
+              dataRow.type = $(elem).text()
+              break
+            case 4:
+              dataRow.completed = $(elem).text().replace(/[\t\n\s]/g, '')
+              break
+            case 6:
+              dataRow.grade = $(elem).text()
+              break
+            case 7:
+              dataRow.earned = $(elem).text()
+              break
+            case 8:
+              sgpa = $(elem).text()
+              break
           }
           j++
         })
@@ -84,6 +84,18 @@ const parseData = ($, cookieJar) => {
     data.DateofAdmission.substring(0, 4),
     ''
   )
+
+  let activityPoints = {}
+
+  var temp;
+  $("#collapseSix .col-sm-12 .table tr td").each(function (i, elem) {
+    if (i % 2 === 0)
+      temp = $(elem).text().replace(/[\t\n\s]/g, '')
+    else
+      activityPoints[temp] = $(elem).text().replace(/[\t\n\s]/g, '')
+  })
+
+  data.activityPoints = activityPoints
 
   return data
 }
