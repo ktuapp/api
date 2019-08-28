@@ -34,8 +34,9 @@ export const saveNotifications = async (notifications) => {
       newNotifications.forEach((n) => {
         sendMessage(JSON.stringify(n))
         console.log('Each notificaiton', n)
+        console.log('Each heading', n.heading, n["heading"])
+        console.log('Each data', n.data, n["data"])
         sendNotification({
-          ...n,
           click_action: 'FLUTTER_NOTIFICATION_CLICK'
         }, {
             'title': n.heading, 'body': n.data
