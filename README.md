@@ -1,6 +1,12 @@
-# KTU API
+<h1 align="center">
+    <br>
+    <a href="https://github.com/ktuapp/api"><img src="https://i.ibb.co/TwQgW51/logo.png" height="120" alt="KTU APP"></a>
+    <br>
+    KTU APP API
+    <br>
+</h1>
 
-This is an api to get APJ Abdul Kalam Technological University (KTU) students grades,basic details etc.
+<h4 align="center">API to get APJ Abdul Kalam Technological University (KTU) students grades,basic details etc.</h4>
 
 ## How to start
 ### Install node modules
