@@ -1,7 +1,6 @@
 import client, { getAsync, lrangeAsync } from '../core/redis'
 import crypto from 'crypto'
-import { sendNotification } from '../core/firebase'
-import { sendMessage } from '../core/slack'
+import { sendNewNotifications } from './notifications'
 
 const expiry = 60 * 60 * 24
 
@@ -30,18 +29,7 @@ export const saveNotifications = async (notifications) => {
       .map((n) => (JSON.stringify(n)))
     if (newNotifications.length > 0) {
       client.rpush('notifications', newNotifications)
-      sendMessage(JSON.stringify(newNotifications))
-      newNotifications.forEach((n) => {
-        sendMessage(JSON.stringify(n))
-        console.log('Each notificaiton', n)
-        console.log('Each heading', n.heading, n["heading"])
-        console.log('Each data', n.data, n["data"])
-        sendNotification({
-          click_action: 'FLUTTER_NOTIFICATION_CLICK'
-        }, {
-            'title': n.heading, 'body': n.data
-          }, 'ktu_notification')
-      })
+      sendNewNotifications(newNotifications)
     }
   } catch (e) {
     console.log(e)

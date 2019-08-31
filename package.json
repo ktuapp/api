@@ -9,6 +9,7 @@
     "start": "babel-node src/index.js",
     "dev": "nodemon src/index.js --exec babel-node",
     "test": "jest --runInBand --verbose",
+    "test-watch": "jest --verbose --watch",
     "coverage": "jest --coverage --runInBand --verbose",
     "eslint": "eslint src/**/*.js --ignore-pattern \"node_modules/\""
   },

@@ -1,4 +1,6 @@
 import slugify from './slugify'
+import { sendNotification } from '../core/firebase'
+import { sendMessage } from '../core/slack'
 
 export const parseNotifications = ($) => {
   let notificationArray = []
@@ -43,4 +45,26 @@ export const parseNotifications = ($) => {
         })
     })
   return notificationArray
+}
+
+export const sendNewNotifications = (notifications) => {
+  notifications.forEach((n) => {
+    sendMessage(JSON.stringify(n))
+    sendNotification(cleanNotificationForFirebase(n))
+  })
+}
+
+export const cleanNotificationForFirebase = (notification) => {
+  const n = JSON.parse(notification)
+  return {
+    data: {
+      ...n,
+      click_action: 'FLUTTER_NOTIFICATION_CLICK'
+    },
+    notification: {
+      title: n.heading,
+      body: n.data.substring(0,100).concat('...')
+    },
+    topic: 'ktu_notification'
+  }
 }
