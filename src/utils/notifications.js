@@ -1,6 +1,6 @@
 import slugify from './slugify'
 
-export default ($) => {
+export const parseNotifications = ($) => {
   let notificationArray = []
   let j = 0
   let notification = {}

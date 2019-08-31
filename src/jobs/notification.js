@@ -1,6 +1,6 @@
 import rp from 'request-promise'
 import cheerio from 'cheerio'
-import parseNotifications from '../utils/parseNotifications.js'
+import { parseNotifications } from '../utils/notifications.js'
 import { saveNotifications } from '../utils/redis'
 import { sendMessage } from '../core/slack.js'
 
