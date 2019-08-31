@@ -21,4 +21,7 @@ jobs:
       - run:
           name: lint
           command: npm run eslint
+      - run:
+          name: test
+          command: npm run test
 
