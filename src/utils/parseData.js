@@ -87,8 +87,8 @@ const parseData = ($, cookieJar) => {
 
   let activityPoints = {}
 
-  var temp;
-  $("#collapseSix .col-sm-12 .table tr td").each(function (i, elem) {
+  let temp
+  $('#collapseSix .col-sm-12 .table tr td').each(function (i, elem) {
     if (i % 2 === 0)
       temp = $(elem).text().replace(/[\t\n\s]/g, '')
     else

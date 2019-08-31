@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 export default (string) => {
   const a = 'àáäâãåăæçèéëêǵḧìíïîḿńǹñòóöôœøṕŕßśșțùúüûǘẃẍÿź·/_,:;'
   const b = 'aaaaaaaaceeeeghiiiimnnnooooooprssstuuuuuwxyz------'

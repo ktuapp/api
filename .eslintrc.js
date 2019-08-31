@@ -10,8 +10,8 @@ module.exports = {
         "sourceType": "module"
     },
     "rules": {
-        "indent": ["error", 4],
-        "indent": ["warn", 2],
+        "indent": ["error", 4,],
+        "indent": ["warn", 2, { "SwitchCase": 1 }],
         "linebreak-style": [
             "error",
             "unix"
@@ -23,6 +23,7 @@ module.exports = {
         "semi": [
             "error",
             "never"
-        ]
+        ],
+        'no-console': 'off',
     }
 };
