@@ -22,7 +22,7 @@
     "dayjs": "^1.7.5",
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
-    "firebase-admin": "^7.3.0",
+    "firebase-admin": "^11.4.1",
     "node-cron": "^2.0.3",
     "redis": "^2.8.0",
     "request": "^2.88.0",
